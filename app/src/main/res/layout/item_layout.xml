@@ -4,20 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/white"
     app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="125dp">
 
 
         <TextView
             android:id="@+id/txArtist"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
+            android:maxLines="2"
+            android:singleLine="false"
             android:text="Artist"
             android:textColor="@android:color/black"
             android:textSize="20sp"
@@ -27,10 +30,12 @@
 
         <TextView
             android:id="@+id/txSong"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
+            android:maxLines="2"
+            android:singleLine="false"
             android:text="Song"
             android:textColor="@android:color/black"
             android:textSize="16sp"
@@ -43,22 +48,61 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:singleLine="false"
             android:text="ID"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txSong" />
 
-        <ImageView
-            android:id="@+id/getTabP"
-            android:layout_width="70dp"
-            android:layout_height="96dp"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_send" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgGetTab"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/gettab"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/ic_menu_send" />
+
+            <ImageView
+                android:id="@+id/imgFavo"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/favorites"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/ic_menu_add" />
+
+            <ImageView
+                android:id="@+id/imgFavoDel"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/delfavo"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/ic_menu_delete" />
+
+            <ImageView
+                android:id="@+id/imgShare"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/share"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/ic_menu_share" />
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

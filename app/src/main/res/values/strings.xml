@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">Fast Songsterr</string>
     <string name="search">Что ищем?</string>
+    <string name="share">Поделиться</string>
+    <string name="favorites">Добавить в избранное</string>
+    <string name="gettab">Открыть табы</string>
+    <string name="errwrite_db">Ошибка записи в БД</string>
+    <string name="errcre_db">Ошибка создании БД</string>
+    <string name="errupd_db">Ошибка при обновлении БД</string>
+    <string name="shareplay">Давай сыграем эту песню</string>
+    <string name="okfavo">Добавлено в избранное</string>
+    <string name="favo">Избранное</string>
+    <string name="favo_backup">Бекап избранного</string>
+    <string name="delfavo">Удалить из избранного</string>
+    <string name="delFavo">Удалено из избранного</string>
+    <string name="savepng">Сохранить в PNG</string>
+    <string name="saveas">Сохранено в</string>
+    <string name="qustfavo">Что делаем с избранным?</string>
+    <string name="export">Экспорт</string>
+    <string name="importx">Импорт</string>
+    <string name="cancel">Передумал</string>
 </resources>

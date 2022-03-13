@@ -8,16 +8,16 @@ data class Response(
 	val chordsPresent: Boolean? = null,
 
 	@field:SerializedName("artist")
-	val artist: Artist? = null,
+	var artist: Artist? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	var id: Int? = null,
 
 	@field:SerializedName("type")
 	val type: String? = null,
 
 	@field:SerializedName("title")
-	val title: String? = null,
+	var title: String? = null,
 
 	@field:SerializedName("tabTypes")
 	val tabTypes: List<String?>? = null
@@ -32,7 +32,7 @@ data class Artist(
 	val useThePrefix: Boolean? = null,
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	var name: String? = null,
 
 	@field:SerializedName("id")
 	val id: Int? = null,

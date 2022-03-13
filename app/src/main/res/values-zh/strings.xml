@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">Fast Songsterr</string>
     <string name="search">我们在找什么？</string>
+    <string name="share">分享</string>
+    <string name="favorites">加入“最喜欢的</string>
+    <string name="gettab">开谱</string>
+    <string name="errwrite_db">数据库写入错误</string>
+    <string name="errcre_db">数据库创建错误</string>
+    <string name="errupd_db">更新数据库时出错</string>
+    <string name="shareplay">让我们播放这首歌</string>
+    <string name="okfavo">添加到收藏夹</string>
+    <string name="favo">收藏夹</string>
+    <string name="favo_backup">最喜欢的备份</string>
+    <string name="delfavo">从收藏夹中删除</string>
+    <string name="delFavo">从收藏夹中删除</string>
+    <string name="savepng">保存为 PNG</string>
+    <string name="saveas">保存在</string>
+    <string name="qustfavo">我们如何处理得救的人?</string>
+    <string name="export">出口</string>
+    <string name="importx">进口</string>
+    <string name="cancel">取消</string>
 </resources>

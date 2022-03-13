@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">Fast Songsterr</string>
     <string name="search">What are we looking for?</string>
+    <string name="share">Share</string>
+    <string name="favorites">Add to favourites</string>
+    <string name="gettab">Open tabs</string>
+    <string name="errwrite_db">Database write error</string>
+    <string name="errcre_db">Database creation error</string>
+    <string name="errupd_db">Error while updating database</string>
+    <string name="shareplay">Let`s play this song</string>
+    <string name="okfavo">Added to favorites</string>
+    <string name="favo">Favorites</string>
+    <string name="favo_backup">Favorite backup</string>
+    <string name="delfavo">Remove from favorites</string>
+    <string name="delFavo">Removed from favorites</string>
+    <string name="savepng">Save to PNG</string>
+    <string name="saveas">Saved in</string>
+    <string name="qustfavo">What do we do with favorites?</string>
+    <string name="export">Exportт</string>
+    <string name="importx">Import</string>
+    <string name="cancel">Cancel</string>
 </resources>
