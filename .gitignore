@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/release/FastSongsterr-release-1.0.apk
+/app/release/output-metadata.json
+/.idea/vcs.xml

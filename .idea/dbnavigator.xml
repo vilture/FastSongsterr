@@ -17,7 +17,7 @@
       <scope value="GLOBAL" />
       <destination value="FILE" />
       <format value="EXCEL" />
-      <charset value="windows-1251" />
+      <charset value="UTF-8" />
     </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -28,7 +28,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="ba25bed9-15af-409d-b16a-a7ad3d235b9e">
-      <console name="FastSongsterr" type="STANDARD" schema="main" session="Main" />
+      <console name="FastSongsterr" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -87,7 +87,7 @@
           <port value="" />
           <database value="" />
           <files>
-            <file path="C:\Users\SpiderPig\AppData\Local\Google\AndroidStudio2021.1\device-explorer\oneplus-le2100-192.168.1.28_5555\data\data\ru.vilture.fastsongsterr\databases\fastsongsterr" schema="main" />
+            <file path="$USER_HOME$/.cache/Google/AndroidStudio2021.1/device-explorer/oneplus-le2100-192.168.100.150_5555/data/data/ru.vilture.fastsongsterr/databases/fastsongsterr.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
@@ -117,7 +117,7 @@
           <session-management value="true" />
           <ddl-file-binding value="true" />
           <database-logging value="true" />
-          <connect-automatically value="true" />
+          <connect-automatically value="false" />
           <restore-workspace value="true" />
           <restore-workspace-deep value="false" />
           <environment-type value="default" />

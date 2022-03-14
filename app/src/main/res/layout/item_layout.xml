@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="6dp"
-            android:maxLines="2"
+            android:maxLines="4"
             android:singleLine="false"
             android:text="Song"
             android:textColor="@android:color/black"
@@ -54,6 +54,7 @@
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="italic"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txSong" />
@@ -74,7 +75,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/gettab"
                 android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/ic_menu_send" />
+                app:srcCompat="@drawable/go" />
 
             <ImageView
                 android:id="@+id/imgFavo"
@@ -83,7 +84,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/favorites"
                 android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/ic_menu_add" />
+                app:srcCompat="@drawable/favorites" />
 
             <ImageView
                 android:id="@+id/imgFavoDel"
@@ -92,7 +93,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/delfavo"
                 android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
+                app:srcCompat="@drawable/delfavorites" />
 
             <ImageView
                 android:id="@+id/imgShare"
@@ -101,7 +102,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/share"
                 android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/ic_menu_share" />
+                app:srcCompat="@drawable/share" />
         </LinearLayout>
 
 

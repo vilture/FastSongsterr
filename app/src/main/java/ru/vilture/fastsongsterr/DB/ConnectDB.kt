@@ -3,11 +3,13 @@ package ru.vilture.fastsongsterr.DB
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.os.Environment
 import android.widget.Toast
 import fastsongsterr.R
+import ru.vilture.fastsongsterr.MainActivity
 import ru.vilture.fastsongsterr.Model.Artist
 import ru.vilture.fastsongsterr.Model.Response
 import java.io.File
@@ -25,7 +27,7 @@ class ConnectDB(private var context: Context) :
     override fun onCreate(db: SQLiteDatabase?) {
         try {
             val sqlFavorites =
-                "CREATE TABLE Favorites (id TEXT NOT NULL,artist TEXT,song TEXT ,PRIMARY KEY(id))"
+                "CREATE TABLE Favorites (id TEXT NOT NULL,artist TEXT,artistid TEXT,song TEXT ,PRIMARY KEY(id))"
 
             db?.execSQL(sqlFavorites)
 
@@ -39,6 +41,8 @@ class ConnectDB(private var context: Context) :
         try {
             when (oldVersion) {
                 1 -> {
+                    val sqlFavorites = "ALTER TABLE Favorites ADD COLUMN artistid TEXT"
+                    db?.execSQL(sqlFavorites)
                 }
 
             }
@@ -50,11 +54,11 @@ class ConnectDB(private var context: Context) :
 
     companion object {
         const val DATABASE_NAME = "fastsongsterr.db"
-        const val DATABASE_VERS = 1
+        const val DATABASE_VERS = 2
         const val TAB_NAME = "Favorites"
     }
 
-    fun existId(id: String):Boolean{
+    fun existId(id: String): Boolean {
         val rdb = this.readableDatabase
 
         val result =
@@ -107,6 +111,7 @@ class ConnectDB(private var context: Context) :
                 when (p.key) {
                     "id" -> cv.put("id", p.value)
                     "artist" -> cv.put("artist", p.value)
+                    "artistid" -> cv.put("artistid", p.value)
                     "song" -> cv.put("song", p.value)
                 }
             }
@@ -161,10 +166,9 @@ class ConnectDB(private var context: Context) :
         return res
     }
 
-    fun exportDatabase(context:Context) = try {
+    fun exportDatabase() = try {
         val dbPath = File("/data/data/ru.vilture.fastsongsterr/databases/fastsongsterr.db")
 
-        //COPY DB PATH
         val dbNew = File("/sdcard/FastSongsterr/databases/")
         if (!dbNew.exists()) {
             dbNew.mkdirs()
@@ -175,44 +179,23 @@ class ConnectDB(private var context: Context) :
         val srcChannel = FileInputStream(dbPath).channel
 
         val dstChannel = FileOutputStream(dbBackup).channel
-        dstChannel.transferFrom(srcChannel,0,srcChannel.size())
+        dstChannel.transferFrom(srcChannel, 0, srcChannel.size())
         srcChannel.close()
         dstChannel.close()
 
-        Toast.makeText(context,"Сохранили тут $dbBackup",Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.msgexport,dbBackup), Toast.LENGTH_LONG).show()
     } catch (ex: Exception) {
-        Toast.makeText(context,"Ошибка экспорта' избраного ${ex.message}",Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.errexport,ex.message), Toast.LENGTH_LONG)
+            .show()
         ex.printStackTrace()
     }
-
-    @Suppress("DEPRECATION")
-    fun importDatabase(context:Context) {
-        val dir = Environment.getExternalStorageDirectory().absolutePath
-        val sd = File(dir)
-        val data = Environment.getDataDirectory()
-
-        val backupDBPath = "/data/data/ru.vilture.fastsongsterr/databases/fastsongsterr.db"
-        val currentDBPath = "fastsongsterr.db"
-        val currentDB = File(sd, currentDBPath)
-        val backupDB = File(data, backupDBPath)
-        try {
-           val source = FileInputStream(currentDB).channel
-           val destination = FileOutputStream(backupDB).channel
-            destination.transferFrom(source, 0, source.size())
-            source.close()
-            destination.close()
-            Toast.makeText(context, "Импорт завершен", Toast.LENGTH_SHORT).show()
-        } catch (ex: Exception) {
-            Toast.makeText(context,"Ошибка импорта избраного ${ex.message}",Toast.LENGTH_LONG).show()
-            ex.printStackTrace()
-        }
-    }
-
 }
+
 
 class Favorites {
     var id: String = ""
     var artist: String = ""
+    var artistid: String = ""
     var song: String = ""
 }
 

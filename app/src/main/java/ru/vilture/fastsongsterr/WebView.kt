@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.webkit.CookieManager
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,36 +35,38 @@ class WebView : AppCompatActivity() {
         supportActionBar!!.setLogo(R.mipmap.ic_launcher)
         supportActionBar!!.setDisplayUseLogoEnabled(true)
 
-        val vw = binding.webView
+        val wv = binding.webView
 
         url = intent.getStringExtra("url").toString()
         name = intent.getStringExtra("song").toString()
 
-        vw.webViewClient = object : WebViewClient() {}
+        wv.settings.javaScriptEnabled = true
+        wv.settings.loadWithOverviewMode = true
+        wv.settings.domStorageEnabled = true
+        wv.settings.useWideViewPort = true
+        wv.settings.setSupportZoom(true)
 
-        vw.settings.javaScriptEnabled = true
-        vw.settings.loadWithOverviewMode = true
-        vw.settings.useWideViewPort = true
-        vw.setBackgroundColor(Color.WHITE)
-        vw.clearCache(true)
+        wv.clearCache(true)
+        wv.setBackgroundColor(Color.WHITE)
 
-        vw.webViewClient = object : WebViewClient() {
+
+        wv.webViewClient = object : WebViewClient() {
             @Suppress("DEPRECATION")
             override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
-                vw.measure(
+                wv.measure(
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
                 )
 
-                vw.layout(0, 0, vw.measuredWidth, vw.measuredHeight)
+                wv.layout(0, 0, wv.measuredWidth, wv.measuredHeight)
 
-                vw.isDrawingCacheEnabled = true
-                vw.buildDrawingCache()
+                wv.isDrawingCacheEnabled = true
+                wv.buildDrawingCache()
 
-                if (vw.measuredWidth > 0 && vw.measuredHeight > 0) {
+                if (wv.measuredWidth > 0 && wv.measuredHeight > 0) {
                     bitmap = Bitmap.createBitmap(
-                        vw.measuredWidth,
-                        vw.measuredHeight,
+                        wv.measuredWidth,
+                        wv.measuredHeight,
                         Bitmap.Config.ARGB_8888
                     )
                 }
@@ -71,14 +74,14 @@ class WebView : AppCompatActivity() {
                 bitmap.let {
                     Canvas(bitmap).apply {
                         drawBitmap(it, 0f, bitmap.height.toFloat(), Paint())
-                        vw.draw(this)
+                        wv.draw(this)
                     }
                 }
             }
         }
 
 
-        vw.loadUrl(url)
+        wv.loadUrl(url)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -116,4 +119,5 @@ class WebView : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
 }

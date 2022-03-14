@@ -2,6 +2,8 @@ package ru.vilture.fastsongsterr
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -14,26 +16,36 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.webkit.CookieManager
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import fastsongsterr.R
 import fastsongsterr.databinding.ActivityMainBinding
+import fastsongsterr.databinding.ChooseinstBinding
 import retrofit2.Call
 import retrofit2.Callback
 import ru.vilture.fastsongsterr.Adapter.TabAdapter
 import ru.vilture.fastsongsterr.DB.ConnectDB
 import ru.vilture.fastsongsterr.Interfaces.Common
 import ru.vilture.fastsongsterr.Model.Response
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: TabAdapter
     private lateinit var layoutManager: LinearLayoutManager
+
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setLogo(R.mipmap.ic_launcher)
         supportActionBar!!.setDisplayUseLogoEnabled(true)
+
+        chooseInst(' ')
 
         binding.recyclerTabList.setHasFixedSize(true)
         layoutManager = LinearLayoutManager(this)
@@ -84,6 +98,60 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun readPref(context: Context): String? {
+        return PreferenceManager.getDefaultSharedPreferences(context)?.getString("inst", "" )
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private fun chooseInst(mode: Char?) {
+        val sPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val bindModal = ChooseinstBinding.inflate(layoutInflater)
+        val dialog = Dialog(
+            this,
+            R.style.Dialog
+        )
+        dialog.setTitle(getString(R.string.finst))
+        dialog.setContentView(bindModal.root)
+        dialog.setCancelable(false)
+
+
+        if (readPref(this) == "") {
+            dialog.show()
+            CookieManager.getInstance().removeAllCookies(null)
+            CookieManager.getInstance().flush()
+        }
+
+        if (mode == 'X'){
+            dialog.show()
+            CookieManager.getInstance().removeAllCookies(null)
+            CookieManager.getInstance().flush()
+        }
+
+        bindModal.chElectro.setOnClickListener {
+            sPref.edit().clear().apply()
+            bindModal.imgElectro.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animg))
+            sPref.edit().putString("inst", "&inst=default").apply()
+
+            dialog.dismiss()
+        }
+
+        bindModal.chBass.setOnClickListener {
+            sPref.edit().clear().apply()
+            bindModal.imgBass.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animg))
+            sPref.edit().putString("inst", "&inst=bass").apply()
+
+            dialog.dismiss()
+        }
+
+        bindModal.chDrum.setOnClickListener {
+            sPref.edit().clear().apply()
+            bindModal.imgDrum.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animg))
+            sPref.edit().putString("inst", "&inst=drum").apply()
+
+            dialog.dismiss()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -110,19 +178,48 @@ class MainActivity : AppCompatActivity() {
                     .setCancelable(true)
                     .setIcon(android.R.drawable.ic_dialog_info)
                     .setPositiveButton(getString(R.string.export)) { dialog, id ->
-                        ConnectDB(this).exportDatabase(
-                            this
-                        )
+                        ConnectDB(this).exportDatabase()
                     }
-                    .setNegativeButton(getString(R.string.importx)) { dialog, id -> ConnectDB(this).importDatabase(this) }
+                    .setNegativeButton(getString(R.string.importx)) { dialog, id ->
+                        importDatabase.launch("application/octet-stream")
+
+                    }
                     .setNeutralButton(getString(R.string.cancel)) { dialog, id -> dialog.cancel() }
                 ad.create().show()
 
                 return true
             }
+            R.id.menu_inst -> {
+                chooseInst('X')
+            }
         }
         return super.onOptionsItemSelected(item)
     }
+
+
+    var importDatabase =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            val currentDB = File(uri.encodedPath)
+            val backupDB =
+                File("/data/data/ru.vilture.fastsongsterr/databases/fastsongsterr.db")
+            try {
+                val source = FileInputStream(currentDB).channel
+                val destination = FileOutputStream(backupDB).channel
+                destination.transferFrom(source, 0, source.size())
+                source.close()
+                destination.close()
+                Toast.makeText(this, getString(R.string.msgimport), Toast.LENGTH_SHORT)
+                    .show()
+            } catch (ex: Exception) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.errimport, ex.message),
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+                ex.printStackTrace()
+            }
+        }
 
 
     private fun getSong(search: String) {
@@ -148,7 +245,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun getArtist(search: String) {
+    fun getArtist(search: String) {
         Common.api.getArtists(search).enqueue(object : Callback<List<Response>> {
             override fun onResponse(
                 call: Call<List<Response>>,
@@ -174,6 +271,8 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
         binding.recyclerTabList.adapter = adapter
     }
+
+
 }
 
 

@@ -1,6 +1,5 @@
 package ru.vilture.fastsongsterr.Adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import fastsongsterr.R
 import fastsongsterr.databinding.ItemLayoutBinding
 import ru.vilture.fastsongsterr.DB.ConnectDB
+import ru.vilture.fastsongsterr.MainActivity
 import ru.vilture.fastsongsterr.Model.Response
 import ru.vilture.fastsongsterr.WebView
 
@@ -43,26 +43,33 @@ class TabAdapter(
             clName: String,
             listItem: Response
         ) {
+
+            txArtist.setOnClickListener {
+                txArtist.startAnimation(AnimationUtils.loadAnimation(context, R.anim.animg))
+                getTab(
+                    context,
+                    "http://www.songsterr.com/a/wa/artist?id=" + listItem.artist!!.id,
+                    listItem.title.toString()
+                )
+            }
+
             imgGetTab.setOnClickListener {
                 imgGetTab.startAnimation(AnimationUtils.loadAnimation(context, R.anim.animg))
                 getTab(
                     context,
-                    "http://www.songsterr.com/a/wa/song?id=" + listItem.id,
+                    "http://www.songsterr.com/a/wa/song?id="
+                            + listItem.id + MainActivity().readPref(context),
                     listItem.title.toString()
                 )
             }
 
             imgShare.setOnClickListener {
                 imgShare.startAnimation(AnimationUtils.loadAnimation(context, R.anim.animg))
-                share(context, "http://www.songsterr.com/a/wa/song?id=" + listItem.id)
-            }
-
-            if (clName == "main") {
-                imgFavo.visibility = View.VISIBLE
-                imgFavoDel.visibility = View.GONE
-            } else {
-                imgFavo.visibility = View.GONE
-                imgFavoDel.visibility = View.VISIBLE
+                share(
+                    context,
+                    "http://www.songsterr.com/a/wa/song?id=" +
+                            listItem.id + MainActivity().readPref(context)
+                )
             }
 
             imgFavo.setOnClickListener {
@@ -71,14 +78,31 @@ class TabAdapter(
                 val values = HashMap<String, String>()
                 values["id"] = listItem.id.toString()
                 values["artist"] = listItem.artist!!.name.toString()
+                values["artistid"] = listItem.artist!!.id.toString()
                 values["song"] = listItem.title.toString()
 
                 val resSave = ConnectDB(context).addData(values)
                 if (!resSave.isOk)
                     Toast.makeText(context, resSave.message, Toast.LENGTH_SHORT).show()
-                else
+                else {
                     Toast.makeText(context, context.getString(R.string.okfavo), Toast.LENGTH_SHORT)
                         .show()
+
+                    card.setBackgroundResource(R.color.yellow)
+                    imgFavo.visibility = View.GONE
+                    imgFavoDel.visibility = View.VISIBLE
+                }
+            }
+
+
+            if (ConnectDB(context).existId(listItem.id.toString())) {
+                card.setBackgroundResource(R.color.yellow)
+                imgFavo.visibility = View.GONE
+                imgFavoDel.visibility = View.VISIBLE
+            } else {
+                imgFavo.visibility = View.VISIBLE
+                imgFavoDel.visibility = View.GONE
+                card.setBackgroundResource(R.color.white)
             }
         }
 
@@ -130,8 +154,6 @@ class TabAdapter(
         holder.txSong.text = listData[position].title
         holder.txId.text = listData[position].id.toString()
 
-        if (ConnectDB(context).existId(listData[holder.adapterPosition].id.toString()))
-            holder.card.setBackgroundResource(R.color.yellow)
     }
 
     override fun getItemCount(): Int {

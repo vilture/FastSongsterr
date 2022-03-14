@@ -10,7 +10,7 @@
     <string name="shareplay">Давай сыграем эту песню</string>
     <string name="okfavo">Добавлено в избранное</string>
     <string name="favo">Избранное</string>
-    <string name="favo_backup">Бекап избранного</string>
+    <string name="favo_backup">Backup избранного</string>
     <string name="delfavo">Удалить из избранного</string>
     <string name="delFavo">Удалено из избранного</string>
     <string name="savepng">Сохранить в PNG</string>
@@ -19,4 +19,13 @@
     <string name="export">Экспорт</string>
     <string name="importx">Импорт</string>
     <string name="cancel">Передумал</string>
+    <string name="msgexport">Экспортировали в %1$s</string>
+    <string name="errexport">Ошибка экспорта избраного %1$s</string>
+    <string name="msgimport">Импорт завершен</string>
+    <string name="errimport">Ошибка импорта избраного %1$s</string>
+    <string name="inst">Выбрать инструмент</string>
+    <string name="electro">Гитара</string>
+    <string name="bass">Бас-гитара</string>
+    <string name="finst">Выберите инструмент</string>
+    <string name="drum">Барабаны</string>
 </resources>

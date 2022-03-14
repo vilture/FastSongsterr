@@ -19,4 +19,13 @@
     <string name="export">出口</string>
     <string name="importx">进口</string>
     <string name="cancel">取消</string>
+    <string name="msgexport">出口到 %1$s</string>
+    <string name="errexport">收藏导出错误 %1$s</string>
+    <string name="msgimport">导入完成</string>
+    <string name="errimport">收藏夹导入错误 %1$s</string>
+    <string name="inst">选择乐器</string>
+    <string name="electro">吉他</string>
+    <string name="bass">低音吉他</string>
+    <string name="finst">选择乐器</string>
+    <string name="drum">Барабаны</string>
 </resources>

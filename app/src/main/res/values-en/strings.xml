@@ -19,4 +19,13 @@
     <string name="export">Exportт</string>
     <string name="importx">Import</string>
     <string name="cancel">Cancel</string>
+    <string name="msgexport">Exported to %1$s</string>
+    <string name="errexport">Favorite export error %1$s</string>
+    <string name="msgimport">Import completed</string>
+    <string name="errimport">Favorite import error %1$s</string>
+    <string name="inst">Choose instrument</string>
+    <string name="electro">Guitar</string>
+    <string name="bass">Bass-guitar</string>
+    <string name="finst">Choose instrument</string>
+    <string name="drum">Барабаны</string>
 </resources>
