@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.CookieManager
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +45,7 @@ class WebView : AppCompatActivity() {
         wv.settings.useWideViewPort = true
         wv.settings.setSupportZoom(true)
 
+
         wv.clearCache(true)
         wv.setBackgroundColor(Color.WHITE)
 
@@ -53,6 +53,7 @@ class WebView : AppCompatActivity() {
         wv.webViewClient = object : WebViewClient() {
             @Suppress("DEPRECATION")
             override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+
                 wv.measure(
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
@@ -78,8 +79,8 @@ class WebView : AppCompatActivity() {
                     }
                 }
             }
-        }
 
+        }
 
         wv.loadUrl(url)
     }
@@ -94,13 +95,14 @@ class WebView : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_savepng -> {
-                savePng(File("/sdcard/FastSongsterr/"), "$name.jpg", bitmap)
+                savePng(File("/sdcard/FastSongsterr/"), "$name.png", bitmap)
 
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun savePng(directory: File, fileName: String, bitmap: Bitmap) {
         if (!directory.exists()) {
@@ -110,7 +112,7 @@ class WebView : AppCompatActivity() {
 
         try {
             val out = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
             out.flush()
             out.close()
             Toast.makeText(this, getString(R.string.saveas) + file, Toast.LENGTH_SHORT).show()

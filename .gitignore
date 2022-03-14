@@ -16,3 +16,11 @@ local.properties
 /app/release/FastSongsterr-release-1.0.apk
 /app/release/output-metadata.json
 /.idea/vcs.xml
+/icon/bass.png
+/icon/delFavorites.png
+/icon/drum.png
+/icon/electro.png
+/icon/favorites.png
+/icon/go.png
+/icon/okFavorites.png
+/icon/share.png
