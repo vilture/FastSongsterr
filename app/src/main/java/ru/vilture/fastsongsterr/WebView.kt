@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.webkit.CookieManager
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -45,14 +47,13 @@ class WebView : AppCompatActivity() {
         wv.settings.useWideViewPort = true
         wv.settings.setSupportZoom(true)
 
-
         wv.clearCache(true)
         wv.setBackgroundColor(Color.WHITE)
 
-
+        @Suppress("DEPRECATION")
         wv.webViewClient = object : WebViewClient() {
-            @Suppress("DEPRECATION")
-            override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+
+            override fun onPageFinished(view: WebView?, url: String?) {
 
                 wv.measure(
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
@@ -60,7 +61,6 @@ class WebView : AppCompatActivity() {
                 )
 
                 wv.layout(0, 0, wv.measuredWidth, wv.measuredHeight)
-
                 wv.isDrawingCacheEnabled = true
                 wv.buildDrawingCache()
 
@@ -79,7 +79,6 @@ class WebView : AppCompatActivity() {
                     }
                 }
             }
-
         }
 
         wv.loadUrl(url)
@@ -122,4 +121,9 @@ class WebView : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        binding.webView.settings.javaScriptEnabled = false
+        binding.webView.destroy()
+        super.onBackPressed()
+    }
 }

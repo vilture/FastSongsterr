@@ -46,7 +46,6 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var adapter: TabAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
-
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +98,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     fun readPref(context: Context): String? {
-        return PreferenceManager.getDefaultSharedPreferences(context)?.getString("inst", "" )
+        return PreferenceManager.getDefaultSharedPreferences(context)?.getString("inst", "")
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -121,7 +120,7 @@ open class MainActivity : AppCompatActivity() {
             CookieManager.getInstance().flush()
         }
 
-        if (mode == 'X'){
+        if (mode == 'X') {
             dialog.show()
             CookieManager.getInstance().removeAllCookies(null)
             CookieManager.getInstance().flush()

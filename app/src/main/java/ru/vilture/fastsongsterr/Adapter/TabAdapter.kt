@@ -27,6 +27,7 @@ class TabAdapter(
 
     private var listData: MutableList<Response> = tabList as MutableList<Response>
 
+
     class MyViewHolder(itemBinding: ItemLayoutBinding) : RecyclerView.ViewHolder(itemBinding.root) {
 
         val txArtist: TextView = itemBinding.txArtist
@@ -120,7 +121,6 @@ class TabAdapter(
             val intent = Intent(context, WebView::class.java)
             intent.putExtra("url", url)
             intent.putExtra("song", song)
-
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
